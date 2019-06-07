@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.softwarica.myapplication.BroadCastActivity;
 import com.softwarica.myapplication.R;
 
+import createChannel.CreateChannel;
+
 public class BroadCastReceiver extends BroadcastReceiver {
     private NotificationManagerCompat notificationManagerCompat;
     Context context;
@@ -23,40 +25,43 @@ public class BroadCastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         boolean noConnectivity;
-
+        notificationManagerCompat = NotificationManagerCompat.from(context);
         if(ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())){
             noConnectivity = intent.getBooleanExtra(
                     ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
 
             if(noConnectivity){
                 Toast.makeText(context, "Disconnected", Toast.LENGTH_SHORT).show();
+                DisplayNotification();
             }
             else{
                 Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+                DisplayNotification2();
             }
 
         }
     }
+    int id =1;
     private void DisplayNotification() {
-        Notification notification = new NotificationCompat.Builder(context, "Channel2")
+        Notification notification = new NotificationCompat.Builder(context, CreateChannel.Channel_2)
                 .setSmallIcon(R.drawable.ic_message_black_24dp)
                 .setContentTitle("No Connection")
                 .setContentText("No connectivity, please turn on the wifi")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_SYSTEM)
                 .build();
 
-        notificationManagerCompat.notify(1, notification);
+        notificationManagerCompat.notify(id, notification);
+id++;
     }
     private void DisplayNotification2() {
-        Notification notification = new NotificationCompat.Builder(context, "Channel2")
+        Notification notification = new NotificationCompat.Builder(context, CreateChannel.Channel_1)
                 .setSmallIcon(R.drawable.ic_message_black_24dp)
                 .setContentTitle("Connected")
                 .setContentText("You have been connected to wifi network")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_SYSTEM)
                 .build();
 
-        notificationManagerCompat.notify(2, notification);
+        notificationManagerCompat.notify(id, notification);
+        id++;
     }
 }

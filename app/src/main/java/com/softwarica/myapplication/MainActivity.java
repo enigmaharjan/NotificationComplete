@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import createChannel.CreateChannel;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnOne, btnTwo;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         btnTwo = findViewById(R.id.btnTwo);
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
+        CreateChannel channel = new CreateChannel(this);
+        channel.createChannel();
 
 
         btnOne.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void DisplayNotification2() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "Channel1")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CreateChannel.Channel_1)
                 .setSmallIcon(R.drawable.ic_message_black_24dp)
                 .setContentTitle("First Message")
                 .setContentText("Hello from the other side")
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void DisplayNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "Channel2")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CreateChannel.Channel_2)
                 .setSmallIcon(R.drawable.ic_message_black_24dp)
                 .setContentTitle("Second Message")
                 .setContentText("Hello from the other side2")
